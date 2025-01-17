@@ -1,18 +1,17 @@
-import React from 'react'
- const App = () => {
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Hero from "../pages/Hero";
+
+export default function App() {
   return (
-    <div className='flex w-full justify-center bg-slate-600 '>
-      <h1>
-      Hello
-
-      </h1>
-
-
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Hero />}>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-
-
-
-export default App;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
