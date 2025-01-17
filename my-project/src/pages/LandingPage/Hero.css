@@ -1,12 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 
 :root{
-    --charcoal: #333333;
+    --charcoal: #1a1a1a;
     --navy: #001f3f;
     --yellow: #ebd43e;
 }
