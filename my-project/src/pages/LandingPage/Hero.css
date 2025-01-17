@@ -5,20 +5,26 @@
 
 
 
+:root{
+    --charcoal: #333333;
+    --navy: #001f3f;
+    --yellow: #ebd43e;
+}
 
-:root {
-  --charcoal: #31363F;
-  --navy: #002A45;
-  --yellow: #FFD700;
-  --font: "Montserrat", sans-serif;
+.navbar {
+    color: var(--yellow);
 
 
-  }
+}
 
+.hero {
+    background-color: var(--charcoal);
+    color: var(--yellow);
+}
 
   body {
    
-    background-color: var(--charcoal);
+    color: var(--charcoal);
     font-family: var(--font);
 
   }
