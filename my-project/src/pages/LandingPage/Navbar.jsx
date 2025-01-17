@@ -20,7 +20,14 @@ const NavItems = () => {
 
 const Navbar = () => {
   return (
-    <div className="navbar w-full h-16 flex fixed z-50 bg-neutral-900 shadow-md top-0 px-8">
+    <motion.div
+    initial= {{y:-50}}
+    animate= {{y:0}}
+
+    transition={{duration: 1, ease: "easeInOut"}}
+
+    
+    className="navbar w-full h-16 flex fixed z-50 bg-neutral-900 shadow-md top-0 px-8">
       <div className="h-full w-full flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center space-x-4">
@@ -46,7 +53,7 @@ const Navbar = () => {
           </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
