@@ -42,9 +42,9 @@ const Navbar = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             transition={{duration: 0.1}}
-            className="p-2 font-bold text-sm bg-yellow-300 text-neutral-900 hover:bg-yellow-200 transition-all rounded-lg"
+            className="p-2 px-6 font-bold text-sm bg-yellow-300 text-neutral-900 hover:bg-yellow-200 transition-all rounded-lg"
           >
-            Get Started!
+            Login
           </motion.button>
         </div>
       </div>

@@ -42,7 +42,7 @@ const Hero = () => {
 
               className="min-w-24 p-2 rounded-lg transition-all duration-200 hover:bg-yellow-200"
             >
-              Login
+              Register
             </motion.button>
             <motion.button
               initial= {{y:0}}
@@ -51,7 +51,7 @@ const Hero = () => {
               className="min-w-24 p-2 rounded-lg transition-all duration-200 hover:bg-yellow-200"
 
             >
-              Register
+              Learn More
             </motion.button>
           </motion.div>
         </div>
