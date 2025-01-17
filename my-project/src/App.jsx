@@ -7,6 +7,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Hero />}>
+        
           
         </Route>
       </Routes>
