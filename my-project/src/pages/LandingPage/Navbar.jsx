@@ -21,11 +21,6 @@ const NavItems = () => {
 const Navbar = () => {
   return (
     <motion.div
-    initial= {{y:-50}}
-    animate= {{y:0}}
-
-    transition={{duration: 1, ease: "easeInOut"}}
-
     
     className="navbar w-full h-16 flex fixed z-50 bg-neutral-900 shadow-md top-0 px-8">
       <div className="h-full w-full flex justify-between items-center">
@@ -47,7 +42,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             transition={{duration: 0.1}}
-            className="px-4 py-2 font-bold bg-yellow-300 text-neutral-900 hover:bg-yellow-200 transition-all rounded-lg"
+            className="p-2 font-bold text-sm bg-yellow-300 text-neutral-900 hover:bg-yellow-200 transition-all rounded-lg"
           >
             Get Started!
           </motion.button>

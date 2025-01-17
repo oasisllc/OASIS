@@ -16,15 +16,15 @@ const Hero = () => {
         <div className="md:w-1/2 w-full h-full items-center md:items-start flex flex-col md:text-center text-left p-8">
           <motion.h1
             {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 1 }}
+            transition={{ ...fadeInUp.transition, delay: 0.5 }}
             className="bg-gradient-to-t bg-clip-text p-2 border-transparent from-yellow-100 to-yellow-400 text-transparent text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center md:text-left text-nowrap"
           >
             Welcome To <br /> Appointly
           </motion.h1>
           <motion.h2
             {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 2 }}
-            className="p-2 text-xs md:text-base font-light"
+            transition={{ ...fadeInUp.transition, delay: 1 }}
+            className="p-4 text-xs md:text-base font-light"
           >
             Scheduling done correctly.
           </motion.h2>
@@ -32,15 +32,15 @@ const Hero = () => {
           <br />
           <motion.div
             {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 3 }}
-            className="p-2 flex flex-row gap-x-4 justify-between"
+            transition={{ ...fadeInUp.transition, delay: 1.5 }}
+            className="px-4 flex text-xs flex-row gap-x-4 justify-between text-yellow-200 hover:text-neutral-900"
           >
             <motion.button
               initial= {{y:0}}
               whileHover={{ y: -5 }}
               transition={{ease: "easeOut", duration:0.1, delay:0}}
 
-              className="min-w-24 bg-yellow-300 text-black py-2 px-4 rounded-lg transition-all duration-200 hover:bg-yellow-200"
+              className="min-w-24 p-2 rounded-lg transition-all duration-200 hover:bg-yellow-200"
             >
               Login
             </motion.button>
@@ -48,7 +48,8 @@ const Hero = () => {
               initial= {{y:0}}
               whileHover={{ y: -5 }}
               transition={{ease: "easeOut", duration:0.1, delay:0}}
-              className="min-w-24 bg-yellow-300 text-black py-2 px-4 rounded-lg transition-all duration-200 hover:bg-yellow-200"
+              className="min-w-24 p-2 rounded-lg transition-all duration-200 hover:bg-yellow-200"
+
             >
               Register
             </motion.button>
