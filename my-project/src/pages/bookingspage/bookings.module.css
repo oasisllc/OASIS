@@ -1,0 +1,211 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.sidepanel{
+    width: 17vw;
+    height: 95vh;
+    border: 1px solid var(--yellow);
+    border-radius: 10px;
+    transform: translateY(2.5vh);
+    margin-left: 1vw;
+    background-color: #171718;
+    box-shadow: 0px 0px 10px rgba(255, 233, 0, .9);
+    border-radius: 24px;
+    position: fixed;
+    z-index: 2;
+    
+}
+
+.logo_con{
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+    border: 0px solid;
+    align-items: center;
+    justify-content: start;
+    gap: 15px;
+    padding-left: 20px;
+}
+
+.logo_con h1{
+    font-size: 18px;
+}
+
+.logoicon{
+    width: 30px;
+    height: 30px;
+}
+
+
+.user_main_options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    padding-left: 20px; 
+    align-items: start;
+    border: 0px solid;
+    height: 60%;
+    gap: 35px;
+    
+}
+
+.user_main_options a{
+    color: var(--yellow);
+    text-decoration: none;
+    font-size: 13px;
+    transition: .1s;
+}
+
+.paneloptioncon{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.paneloptioncon:hover a{
+    color: white;
+}
+
+.account_options{
+    border: 0px solid;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 20px;
+    gap: 35px;
+}
+
+.account_options a{
+    color: var(--yellow);
+    text-decoration: none;
+    font-size: 13px;
+    transition: .1s;
+}
+
+.account_options span{
+    color: rgb(228, 77, 77);
+    margin-left: 4.5vw;
+    padding: 10px;
+    border: 1px solid rgb(228, 77, 77);
+    border-radius: 5px;
+    transition: .2s;
+}
+
+.account_options span:hover{
+    color: white;
+}
+
+.bookings_holder{
+    width: 75vw;
+    height: 75vh;
+    border : 1px solid var(--yellow);
+    border-radius: 10px;
+    transform: translateX(20vw)translateY(19vh);
+    overflow-x: hidden;
+    box-shadow: 0px 0px 5px var(--yellow);
+}
+
+.data_points{
+    transform: translateX(20vw)translateY(7vh);
+    position: absolute;
+    overflow-x: hidden;
+}
+
+.opt_bar{
+    display: flex;
+    gap: 10px;
+    margin-top: 0vh;
+    padding-left: 20px;
+    width: 100%;
+    border-bottom: 1px solid var(--yellow);
+    background-color: #171718;
+    font-size: 13px;
+    
+}
+
+.opt_bar_items{
+    display: flex;
+    align-items: center;
+    gap:20px
+}
+
+.filter_box{
+    border: 0px solid;
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+}
+
+input{
+    width: 10px;
+    height: 10px;
+}
+
+h3{
+    font-weight: 300;
+}
+
+.item{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: #171718;
+    gap: 15px;
+    padding-left: 15px;
+    transition: .2s;
+}
+
+.item_desc{
+    border: 0px solid;
+    width: 300px;
+    height: 80%;
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+.resource_name{
+    transform: translateY(0vh);
+}
+
+.delete_button{
+    margin-left: auto;
+    margin-right: 3vw;
+    height: 50px;
+    width: 50px;
+    background:none;
+    border: none;
+}
+
+.delete_icon{
+    width: 20px;
+    height: 20px;
+    color: rgb(228, 77, 77);
+    transition: .1s;
+}
+
+.delete_icon:hover{
+    color: rgb(143, 141, 141);
+}
+
+
+.item_date{
+    font-size: 13px;
+    margin-left: 100px;
+}
+
+.item:hover{
+    color: black;
+    background-color: var(--yellow);
+    border-bottom: 2px solid var(--yellow);
+}
+
+.item_date{
+    width: 100px;
+}

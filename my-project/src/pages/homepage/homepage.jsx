@@ -13,7 +13,7 @@ import { Product_search } from '../product-search/product-search';
 import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 
 export function Homepage() {
     const location = useLocation();
@@ -39,11 +39,10 @@ export function Homepage() {
         fetchData();
     }, []);
 
-    let nav = useNavigate();
+    const navigate = useNavigate();
 
     const navAccount = () => {
-        
-        nav('/profilepage', { state: { user: user } });
+        navigate('/profilepage', { state: { user: user } });
     }
 
     const handleBookNow = (item) => {
@@ -74,11 +73,11 @@ export function Homepage() {
                 <div className={styles.user_main_options}>
                     <div className={styles.paneloptioncon}>
                         <GoHome className={styles.panelicon} />
-                        <a href="">Home</a>
+                        <Link to="/homepage" state={{ user }}>Home</Link>
                     </div>
                     <div className={styles.paneloptioncon}>
                         <CiBookmarkCheck className={styles.panelicon} />
-                        <a href="">Bookings</a>
+                        <Link to="/bookingspage" state={{ user }}>Bookings</Link>
                     </div>
                     <div className={styles.paneloptioncon}>
                         <VscTools className={styles.panelicon} />
@@ -93,7 +92,7 @@ export function Homepage() {
                 <div className={styles.account_options}>
                     <div className={styles.paneloptioncon}>
                         <VscAccount className={styles.panelicon} />
-                        <a onClick={navAccount} >Account</a>
+                        <a onClick={navAccount}>Account</a>
                     </div>
                     <a href="/" className={styles.signout}><span>Sign out</span></a>
                 </div>

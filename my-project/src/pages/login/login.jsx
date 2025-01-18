@@ -5,7 +5,6 @@ import { db } from '../../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 function Login() {
-    const [user, setUser] = useState({});
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -16,7 +15,6 @@ function Login() {
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
             const userData = querySnapshot.docs[0].data();
-            setUser(userData);
             navigate('/homepage', { state: { user: userData } });
         } else {
             alert("Invalid username or password");
