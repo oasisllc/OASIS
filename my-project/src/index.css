@@ -5,18 +5,22 @@
 
 
 :root {
-  --charcoal: #31363F;
+  --charcoal: #171718;
   --navy: #002A45;
   --yellow: #FFD700;
   --font: "Montserrat", sans-serif;
 
-
   }
+  html {
+    scroll-behavior: smooth;
+  }
+  
 
 
   body {
    
     background-color: var(--charcoal);
+    
     font-family: var(--font);
 
   }

@@ -4,9 +4,12 @@ import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 import './index.css'
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Profile from "./pages/ProfilePage/Profile.jsx";
+import Resources from "./pages/ResourcePage/Resources.jsx"; 
 
 
 export default function App() {
+  
   return (
     <BrowserRouter>
       <Routes>
