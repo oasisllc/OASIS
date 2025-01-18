@@ -47,6 +47,7 @@ const Hero = (props) => {
             transition={{ ...fadeInUp.transition, delay: 1.5 }}
             className="px-4 flex text-xs flex-row gap-x-4 justify-between text-yellow-200 hover:text-neutral-900"
           >
+            <a href="/signuppage">
             <motion.button
               initial= {{y:0}}
               whileHover={{ y: -5 }}
@@ -56,6 +57,8 @@ const Hero = (props) => {
             >
               Register
             </motion.button>
+            </a>
+            
             <motion.button
               onClick={gotoAboutSection}
               initial= {{y:0}}

@@ -1,0 +1,136 @@
+
+:root{
+    --charcoal: #333333;
+    --navy: #001f3f;
+    --yellow: #ebd43e;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    background-color: var(--charcoal);
+    font-family: var(--font);
+    color: var(--yellow);
+}
+
+::-webkit-scrollbar{
+    width: 0px;
+}
+
+
+.search_container{
+    border: 0px solid;
+    width: fit-content;
+    justify-content: left;
+    margin: 40px;
+}
+
+
+.searchbar{
+    border: 1px solid var(--yellow);
+    background-color: var(--charcoal);
+    padding: 10px;
+    border-radius: 5px;
+    width: 20vw;
+    color: var(--yellow);
+    z-index: 2;
+}
+
+.searchbar:focus{
+    outline: none;
+}
+
+.result_box{
+    z-index: 1;
+    border: 1px solid var(--yellow);
+    width: 100%;
+    min-height: 16vh;
+    transform: translateY(-.3vh);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    overflow: hidden;
+    height: fit-content;
+    max-height: 25vh;
+    overflow-y: scroll;
+    
+}
+
+.result{
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    color: var(--charcoal);
+    font-size: 12px;
+    gap: 10px;
+    transition: .2s;
+}
+
+.result_img_con{
+    width: 40px;
+    height: 80%;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+  
+}
+
+.result:hover{
+    background-color: var(--charcoal);
+    color: white;
+}
+
+
+
+/*-------------------*/
+.searchbar:focus + .result_box {
+    display: flex;
+}
+
+.result_box {
+    display: none;
+    z-index: 1;
+    border: 1px solid var(--yellow);
+    width: 100%;
+    min-height: 16vh;
+    transform: translateY(-.3vh);
+    background-color: white;
+    flex-direction: column;
+    align-items: start;
+    overflow: hidden;
+    height: fit-content;
+    max-height: 25vh;
+    overflow-y: scroll;
+    transition: .3s;
+}
+
+.result {
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    color: var(--charcoal);
+    font-size: 12px;
+    gap: 10px;
+    transition: .2s;
+}
+
+.result_img_con {
+    width: 40px;
+    height: 80%;
+    border: 0px solid;
+    border-radius: 3px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.result:hover {
+    background-color: var(--charcoal);
+    color: white;
+}

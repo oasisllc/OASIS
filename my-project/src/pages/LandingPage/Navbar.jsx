@@ -1,5 +1,6 @@
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Login from "../Login/Login";
 
 const NavItems = () => {
   const navLinks = {
@@ -38,6 +39,7 @@ const Navbar = () => {
         </div>
 
         {/* CTA Button */}
+        <a href="/loginpage">
         <div className="items-center">
           <motion.button
             initial={{ y: 0 }}
@@ -49,6 +51,7 @@ const Navbar = () => {
             Login
           </motion.button>
         </div>
+        </a>
       </div>
     </motion.div>
   );

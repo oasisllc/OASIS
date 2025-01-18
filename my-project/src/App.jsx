@@ -4,8 +4,10 @@ import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 import './index.css'
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import Profile from "./pages/ProfilePage/Profile.jsx";
+import {Profile} from "./pages/ProfilePage/Profile.jsx";
 import Resources from "./pages/ResourcePage/Resources.jsx"; 
+import { Homepage } from "./pages/homepage/homepage.jsx";
+
 
 
 export default function App() {
@@ -16,7 +18,8 @@ export default function App() {
         <Route path="/" element={<LandingPage/>}/>
           <Route path="/loginpage" element={<Login />} />
           <Route path="/signuppage" element={<Signup />} />
-        
+          <Route path= '/homepage' element={<Homepage />} />
+          <Route path= '/profilepage' element={<Profile />} />
         
       </Routes>
     </BrowserRouter>

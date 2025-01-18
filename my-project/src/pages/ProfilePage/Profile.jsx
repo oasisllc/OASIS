@@ -4,14 +4,20 @@ import "./Profile.css";
 import defaultImg from "/src/assets/default profile image.png";
 import UploadPicture from "./UploadPicture";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { use } from "react";
 
-const Profile = (props) => {
+export const Profile = (props) => {
   const stats = { Bookings: 0, Completed: 9, Pending: 28, Cancelled: 19 };
   const [uploadOpen, setUploadOpen] = useState(false); // Controls the upload modal visibility
   const [profileImg, setProfileImg] = useState(props.profileImg || defaultImg); // State for profile image
   const [firstName, setFirstName] = useState(props.firstName || "John");
   const [lastName, setLastName] = useState(props.lastName || "Doe");
   const [username, setUsername] = useState(props.username || "johndoe");
+
+  const location = useLocation();
+  const user = location.state?.user;
+  console.log(user)
 
   // Function to handle the profile picture update
   const handleProfilePictureUpdate = (newImage) => {
@@ -92,7 +98,7 @@ const Profile = (props) => {
           >
             <div className="w-full h-14 rounded-3xl justify-center flex">
               <h1 className="text-2xl">
-                Hi {props.nickname ? props.nickname : "John"}
+                Hi {user.username ?? "John"}
               </h1>
             </div>
 
@@ -105,7 +111,7 @@ const Profile = (props) => {
                   <input
                     id="fname"
                     type="text"
-                    value={firstName}
+                    value={user.username || "John"}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Enter your first name"
                     className="p-2 rounded bg-neutral-950 text-sm h-6"
@@ -119,7 +125,7 @@ const Profile = (props) => {
                   <input
                     id="lname"
                     type="text"
-                    value={lastName}
+                    value={user.email || ""}  
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Enter your last name"
                     className="p-2 rounded bg-neutral-950 text-sm h-6"
@@ -146,7 +152,7 @@ const Profile = (props) => {
                   <input
                     id="username"
                     type="text"
-                    value={username}
+                    value={user.username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter your username"
                     className="p-2 rounded bg-neutral-950 text-sm h-6"
@@ -167,5 +173,3 @@ const Profile = (props) => {
     </>
   );
 };
-
-export default Profile;
