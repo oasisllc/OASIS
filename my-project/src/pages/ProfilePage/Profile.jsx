@@ -14,9 +14,9 @@ export const Profile = (props) => {
   const stats = { Bookings: 0, Completed: 9, Pending: 28, Cancelled: 19 };
   const [uploadOpen, setUploadOpen] = useState(false); // Controls the upload modal visibility
   const [profileImg, setProfileImg] = useState(props.profileImg || defaultImg); // State for profile image
-  const [firstName, setFirstName] = useState(props.firstName || "John");
-  const [lastName, setLastName] = useState(props.lastName || "Doe");
-  const [username, setUsername] = useState(props.username || "johndoe");
+  const [firstName, setFirstName] = useState(user.firstname || "John");
+  const [lastName, setLastName] = useState(user.lastname || "Doe");
+  const [username, setUsername] = useState(user.username || "johndoe");
   const [showNavPanel, setShowNavPanel] = useState(false);
   
   // Function to handle the profile picture update
@@ -79,7 +79,7 @@ export const Profile = (props) => {
                   <CiCamera />
                 </button>
               </div>
-              <h1 className="text-sm text-green-600 font-medium">{props.name || "John Doe"}</h1>
+              <h1 className="text-sm text-green-600 font-medium">{user.username || "John Doe"}</h1>
             </div>
 
             <div className="w-full h-60 flex flex-col gap-4 px-4 pt-4">
@@ -142,7 +142,7 @@ export const Profile = (props) => {
                   <input
                     id="email"
                     type="email"
-                    value={props.email || "example@example.com"}
+                    value={user.email || "example@example.com"}
                     readOnly
                     className="p-2 w-48 rounded border border-gray-300 bg-gray-100 cursor-not-allowed"
                   />
