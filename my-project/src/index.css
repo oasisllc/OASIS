@@ -5,17 +5,20 @@
 
 
 :root {
-  --charcoal: #171718;
-  --navy: #002A45;
-  --yellow: #FFD700;
+ 
   --font: "Montserrat", sans-serif;
 
   }
+  
   html {
     scroll-behavior: smooth;
   }
   
 
+  input:focus{
+    outline: none;
+  }
+  
 
   body {
    
@@ -24,4 +27,3 @@
 
   }
 
-  

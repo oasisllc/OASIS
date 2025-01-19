@@ -1,271 +1,270 @@
-import styles from './blogpage.module.css';
 import { SlCalender } from "react-icons/sl";
 import { GoHome } from "react-icons/go";
 import { CiBookmarkCheck } from "react-icons/ci";
-import { VscTools } from "react-icons/vsc";
+import { VscTools, VscAccount } from "react-icons/vsc";
 import { FaRegShareSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../database';
-
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import NavigationPanel from "../homepage/NavigationPanel";
 
 export function Blogs() {
-    const location = useLocation();
-    const user = location.state?.user;
+  const location = useLocation();
+  const user = location.state?.user;
 
-    const [blogs, setBlogs] = useState([]);
-    const [allBlogs, setAllBlogs] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
-    const [showForm, setShowForm] = useState(false);
-    const [newBlog, setNewBlog] = useState({
-        caption: '',
+  const [blogs, setBlogs] = useState([]);
+  const [allBlogs, setAllBlogs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [newBlog, setNewBlog] = useState({
+    caption: "",
+    collaborators: [],
+    username: user?.username || "",
+    desc: "",
+    img: "",
+    organization: "",
+    postedby: user?.username || "",
+  });
+
+  const [showNavPanel, setShowNavPanel] = useState(false);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const querySnapshot = await getDocs(collection(db, "blogs"));
+      const blogsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setAllBlogs(blogsData);
+      setBlogs(blogsData);
+    };
+
+    fetchBlogs();
+  }, []);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setBlogs(allBlogs);
+    } else {
+      const filteredBlogs = allBlogs.filter((blog) =>
+        blog.postedby?.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
+      setBlogs(filteredBlogs);
+    }
+  }, [searchTerm, allBlogs]);
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setIsFocused(false);
+    }, 200);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewBlog((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNewBlog((prevState) => ({
+        ...prevState,
+        img: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "blogs"), newBlog);
+      setAllBlogs((prevBlogs) => [...prevBlogs, newBlog]);
+      setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
+      setShowForm(false);
+      setNewBlog({
+        caption: "",
         collaborators: [],
-        username: user?.username || '',
-        desc: '',
-        img: '',
-        organization: '',
-        postedby: user?.username || ''
-    });
+        username: user?.username || "",
+        desc: "",
+        img: "",
+        organization: "",
+        postedby: user?.username || "",
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
 
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            const querySnapshot = await getDocs(collection(db, 'blogs'));
-            const blogsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            console.log('Fetched Blogs:', blogsData); // Log fetched blogs
-            setAllBlogs(blogsData);
-            setBlogs(blogsData);
-        };
+  const navigate = useNavigate();
 
-        fetchBlogs();
-    }, []);
+  const navAccount = () => {
+    navigate("/profilepage", { state: { user: user } });
+  };
 
-    useEffect(() => {
-        if (searchTerm === '') {
-            setBlogs(allBlogs);
-        } else {
-            const filteredBlogs = allBlogs.filter(blog =>
-                blog.postedby && blog.postedby.toLowerCase().startsWith(searchTerm.toLowerCase())
-            );
-            console.log('Filtered Blogs:', filteredBlogs); // Log filtered blogs
-            setBlogs(filteredBlogs);
-        }
-    }, [searchTerm, allBlogs]);
-
-    const handleChange = (e) => {
-        setSearchTerm(e.target.value);
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (e.clientX < 200) {
+        setShowNavPanel(true);
+      } else {
+        setShowNavPanel(false);
+      }
     };
 
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-    const handleBlur = () => {
-        setTimeout(() => {
-            setIsFocused(false);
-        }, 200);
-    };
+  return (
+    <>
+      <NavigationPanel showPanel ={showNavPanel} />
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewBlog(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+      <div className="p-6 bg-green-50">
+        <h1 className="text-green-800 text-4xl font-bold text-center">What's New?</h1>
+        <p className="text-green-600 text-center mt-2">Connect with other visionaries!</p>
+      </div>
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setNewBlog(prevState => ({
-                ...prevState,
-                img: reader.result
-            }));
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await addDoc(collection(db, 'blogs'), newBlog);
-            setAllBlogs(prevBlogs => [...prevBlogs, newBlog]);
-            setBlogs(prevBlogs => [...prevBlogs, newBlog]);
-            setShowForm(false);
-            setNewBlog({
-                caption: '',
-                collaborators: [],
-                username: user?.username || '',
-                desc: '',
-                img: '',
-                organization: '',
-                postedby: user?.username || ''
-            });
-        } catch (error) {
-            console.error('Error adding document: ', error);
-        }
-    };
-
-    const navigate = useNavigate();
-
-    const navAccount = () => {
-        navigate('/profilepage', { state: { user: user } });
-    };
-
-    return (
-        <>
-            <div className={styles.sidepanel}>
-                <div className={styles.logo_con}>
-                    <SlCalender className={styles.logoicon} />
-                    <h1>Appointly</h1>
-                </div>
-
-                <div className={styles.user_main_options}>
-                    <div className={styles.paneloptioncon}>
-                        <GoHome className={styles.panelicon} />
-                        <Link to="/homepage" state={{ user }}>Home</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <CiBookmarkCheck className={styles.panelicon} />
-                        <Link to="/bookingspage" state={{ user }}>Bookings</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <VscTools className={styles.panelicon} />
-                        <a href="">Resources</a>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <FaRegShareSquare className={styles.panelicon} />
-                        <a href="">Blogs</a>
-                    </div>
-                </div>
-
-                <div className={styles.account_options}>
-                    <div className={styles.paneloptioncon}>
-                        <VscAccount className={styles.panelicon} />
-                        <a onClick={navAccount}>Account</a>
-                    </div>
-                    <a href="/" className={styles.signout}><span>Sign out</span></a>
-                </div>
-            </div>
-
-            <div className={styles.head_con}>
-                <h1>What's new?</h1>
-                <p>Connect with other visionaries!</p>
-            </div>
-
-            <div className={styles.blog_main}>
-                <div className={styles.uppertab}>
-                    <div className={styles.searchcon}>
-                        <input
-                            type="text"
-                            placeholder="Search by author"
-                            value={searchTerm}
-                            onChange={handleChange}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            className={styles.searchbar}
-                        />
-                        {isFocused && (
-                            <div className={styles.result_box} onMouseDown={(e) => e.preventDefault()}>
-                                {blogs.map((blog) => (
-                                    <div key={blog.id} className={styles.result}>
-                                        <h3>{blog.postedby}</h3>
-                                        <p>{blog.caption}</p>
-                                    </div>
-                                ))}
-                                {blogs.length === 0 && searchTerm !== '' && (
-                                    <div className={styles.result}>
-                                        <h3>No results found</h3>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                <button onClick={() => setShowForm(true)} className={styles.add_blog_button}>Add Blog</button>
-
-                <div className={styles.blogresults}>
-                    {blogs.length > 0 ? (
-                        blogs.map((blog) => (
-                            <div key={blog.id} className={styles.blog_con}>
-                                <div className={styles.user_posted}>
-                                    <p className={styles.postedby}>{blog.postedby}</p>
-                                </div>
-
-
-                                <div className={styles.img_con}>
-                                    <img src={blog.img} alt="" className={styles.img} />
-
-                                </div>
-
-                                <div className={styles.caption}>
-                                    {blog.caption}
-                                </div>
-                                <div className={styles.desc_con}>
-                                    <p className={styles.desc}>
-                                        {blog.desc}
-                                    </p>
-                                </div>
-                                <button className={styles.readmore}>
-                                    Read more
-                                </button>
-                            </div>
-                        ))
-                    ) : (
-                        <div className={styles.noblogs}>
-                            <p className={styles.noblogtext}>
-                                No Blogs yet....
-                            </p>
-                            <button className={styles.book_button}>Create Blog</button>
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            {showForm && (
-                <div className={styles.form_container}>
-                    <div className={styles.exit_button} onClick={() => setShowForm(false)}>Close</div>
-                    <h3>Create Post</h3>
-                    <form onSubmit={handleFormSubmit} className={styles.blog_form}>
-                        <div className={styles.form_content}>
-                            <div>
-                                <label>
-                                    Caption:
-                                    <input type="text" name="caption" value={newBlog.caption} onChange={handleInputChange} />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    Description:
-                                    <textarea name="desc" value={newBlog.desc} onChange={handleInputChange}></textarea>
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    Organization:
-                                    <input type="text" name="organization" value={newBlog.organization} onChange={handleInputChange} />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    Collaborators:
-                                    <input type="text" name="collaborators" value={newBlog.collaborators} onChange={handleInputChange} />
-                                </label>
-                            </div>
-                            <div className="i">
-                                <label className={styles.imgupload}>
-                                    <input type="file" onChange={handleImageUpload} />
-                                </label>
-                            </div>
-                            <button type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
+      <div className="p-6">
+        <div className="flex justify-center mb-6">
+          <div className="relative w-full max-w-md">
+            <input
+              type="text"
+              placeholder="Search by author"
+              value={searchTerm}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              className="w-full p-3 border border-green-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-green-400"
+            />
+            {isFocused && (
+              <div className="absolute left-0 right-0 bg-white shadow-lg mt-1 rounded-lg p-3 max-h-60 overflow-y-auto">
+                {blogs.map((blog) => (
+                  <div key={blog.id} className="p-2 border-b border-green-200">
+                    <h3 className="text-green-700 font-semibold">{blog.postedby}</h3>
+                    <p className="text-green-600 text-sm">{blog.caption}</p>
+                  </div>
+                ))}
+                {blogs.length === 0 && searchTerm !== "" && (
+                  <div className="text-center text-green-600">No results found</div>
+                )}
+              </div>
             )}
-        </>
-    );
+          </div>
+        </div>
+        <div className="w-full flex justify-end">
+
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 shadow-lg"
+          >
+          Add Blog
+        </button>
+
+            </div>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <div key={blog.id} className="border border-green-300 rounded-lg p-4 bg-white shadow-lg">
+                <div className="text-green-800 font-bold">{blog.postedby}</div>
+                <img
+                  src={blog.img}
+                  alt=""
+                  className="w-full h-40 object-cover rounded-lg mt-2 mb-4"
+                />
+                <h3 className="text-green-700 font-semibold">{blog.caption}</h3>
+                <p className="text-green-600 text-sm mt-2">{blog.desc}</p>
+                <div className="flex justify-end">
+                <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                  Read more
+                </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center text-green-600">No Blogs yet...</div>
+          )}
+        </div>
+      </div>
+
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <div
+              className="text-red-500 font-bold text-right cursor-pointer"
+              onClick={() => setShowForm(false)}
+            >
+              Close
+            </div>
+            <h3 className="text-green-800 font-bold text-xl mb-4">Create Post</h3>
+            <form onSubmit={handleFormSubmit}>
+              <div className="mb-4">
+                <label className="block text-green-600 font-semibold mb-2">Caption:</label>
+                <input
+                  type="text"
+                  name="caption"
+                  value={newBlog.caption}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-green-600 font-semibold mb-2">Description:</label>
+                <textarea
+                  name="desc"
+                  value={newBlog.desc}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+                ></textarea>
+              </div>
+              <div className="mb-4">
+                <label className="block text-green-600 font-semibold mb-2">Organization:</label>
+                <input
+                  type="text"
+                  name="organization"
+                  value={newBlog.organization}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-green-600 font-semibold mb-2">Collaborators:</label>
+                <input
+                  type="text"
+                  name="collaborators"
+                  value={newBlog.collaborators}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-green-600 font-semibold mb-2">Image:</label>
+                <input
+                  type="file"
+                  onChange={handleImageUpload}
+                  className="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

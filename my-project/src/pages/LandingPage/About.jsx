@@ -36,8 +36,8 @@ const BallCanvas = (props) => {
     <Canvas style={{ width: '100%', height: '100%' } }>
       <PerspectiveCamera makeDefault position={[0, 0, 3]} fov={60} />
       <OrbitControls enablePan={false} enableZoom={false} />
-      <ambientLight intensity={0.3} color='yellow' />
-      <directionalLight position={[0, 0, 0.05]} color='yellow' intensity={0.5} />
+      <ambientLight intensity={1} color='white' />
+      <directionalLight position={[0, 0, 0.5]} color='green' intensity={10} />
       <Ball decal = {props.decal} />
     </Canvas>
   );
@@ -45,27 +45,27 @@ const BallCanvas = (props) => {
 
 const About = () => {
   return (
-    <motion.div id="about" className="relative w-full min-h-screen overflow-hidden bg-neutral-900 p-8 md:p-16 flex flex-col md:flex-row items-center gap-12">
+    <motion.div id="about" className="relative w-full min-h-screen overflow-hidden  p-8 md:p-16 flex flex-col md:flex-row items-center gap-12">
       {/* Left Section with Motion */}
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         whileInView={{ x: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeInOut" }}
-        className="md:w-1/2 w-full flex items-center justify-center"
+        className="md:w-1/2 w-full  bg-white flex items-center justify-center"
       >
         <div
           style={{
-            boxShadow: "0px 0px 20px rgba(255, 233, 0, 1)",
+            boxShadow: "0px 0px 20px rgba(0, 150, 0, 1)",
             borderRadius: "24px",
           }}
-          className="w-full max-w-md md:max-w-lg min-h-[300px] text-center p-4 justify-center items-center"
+          className="w-full  max-w-md md:max-w-lg min-h-[300px] text-center p-4 justify-center items-center"
         >
-          <h1 className="text-2xl p-2">What Is <br /> Appointly?</h1>
+          <h1 className="text-2xl p-2 text-green-500 font-bold">What Is <br /> Appointly?</h1>
           <br />
-          <p className="text-base text-yellow-100">
+          <p className="text-base text-green-500">
             "Appointly is your{" "}
             <motion.span
-              className="bg-gradient-to-r font-bold from-yellow-200 to-yellow-300 bg-clip-text text-transparent"
+              className="bg-gradient-to-r font-bold from-green-200 to-green-300 bg-clip-text text-transparent"
             >
               go-to platform
             </motion.span>{" "}
@@ -82,10 +82,10 @@ const About = () => {
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3, ease: "easeInOut" }}
           style={{
-            boxShadow: "0px 0px 20px rgba(255, 233, 0, 1)",
+            boxShadow: "0px 0px 20px rgba(0, 150, 0, 1)",
             borderRadius: "24px",
           }}
-          className="w-full items-center max-w-md md:max-w-lg min-h-[200px]"
+          className="w-full bg-white items-center max-w-md md:max-w-lg min-h-[200px]"
         >
           <div className="w-full mt-6 h-full flex justify-center items-center">
             <BallCanvas decal= "../src/assets/clock.png" />
@@ -100,24 +100,24 @@ const About = () => {
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
           style={{
-            boxShadow: "0px 0px 20px rgba(255, 233, 0, 1)",
+            boxShadow: "0px 0px 20px rgba(0, 150, 0, 1)",
             borderRadius: "24px",
           }}
-          className="w-full max-w-md md:max-w-lg min-h-[200px] p-4 text-center"
+          className="w-full bg-white max-w-md md:max-w-lg min-h-[200px] p-4 text-center"
         >
-          <h1 className="text-2xl p-2">Why Us?</h1>
+          <h1 className="text-2xl p-2 text-green-500 font-bold">Why Us?</h1>
           <br />
-          <p className="text-base text-yellow-100">
+          <p className="text-base text-green-500">
             Appointly makes scheduling simple and efficient. With an{" "}
-            <motion.span className="bg-gradient-to-r font-bold from-yellow-200 to-yellow-300 bg-clip-text text-transparent">
+            <motion.span className="bg-gradient-to-r font-bold from-green-200 to-green-300 bg-clip-text text-transparent">
               intuitive interface
             </motion.span>
             ,{" "}
-            <motion.span className="bg-gradient-to-r font-bold from-yellow-200 to-yellow-300 bg-clip-text text-transparent">
+            <motion.span className="bg-gradient-to-r font-bold from-green-200 to-green-300 bg-clip-text text-transparent">
               real-time notifications
             </motion.span>
             , and{" "}
-            <motion.span className="bg-gradient-to-r font-bold from-yellow-200 to-yellow-300 bg-clip-text text-transparent">
+            <motion.span className="bg-gradient-to-r font-bold from-green-200 to-green-300 bg-clip-text text-transparent">
               secure integrations
             </motion.span>
             , we help you stay organized and on track, effortlessly managing your appointments and events.

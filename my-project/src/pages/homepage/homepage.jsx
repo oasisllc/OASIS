@@ -1,23 +1,19 @@
 import styles from './homepage.module.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SlCalender } from "react-icons/sl";
-import { GoHome } from "react-icons/go";
-import { CiBookmarkCheck } from "react-icons/ci";
-import { VscTools } from "react-icons/vsc";
-import { FaRegShareSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
+import { motion } from "framer-motion";
+
 import { GiMaterialsScience } from "react-icons/gi";
 import { MdOutlineScience } from "react-icons/md";
 import { Product_search } from '../product-search/product-search';
 import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import NavigationPanel from './NavigationPanel';
 
 export function Homepage() {
-    const location = useLocation()
-      const user = location.state?.user;
+    const location = useLocation();
+    const user = location.state?.user;
+    const [showNavPanel, setShowNavPanel] = useState(false);
 
     const [popular, setPopular] = useState([]);
     const [resource_to_book, setResourceToBook] = useState(null);
@@ -39,19 +35,6 @@ export function Homepage() {
         fetchData();
     }, []);
 
-    const navigate = useNavigate();
-
-    const navAccount = () => {
-        console.log(user)
-        navigate('/profilepage', { state: { user: user } });
-    }
-
-    const navResources = () =>{
-        console.log(user)
-        navigate('/resourcespage', { state: { user: user } });
-
-    }
-
     const handleBookNow = (item) => {
         setResourceToBook(item);
         console.log(item);
@@ -69,103 +52,133 @@ export function Homepage() {
         }
     };
 
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+          if (e.clientX < 200) {
+            setShowNavPanel(true);
+          } else {
+            setShowNavPanel(false);
+          }
+        };
+    
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+      }, []);
+
     return (
-        <>
-            <div className={styles.sidepanel}>
-                <div className={styles.logo_con}>
-                    <SlCalender className={styles.logoicon} />
-                    <h1>Appointly</h1>
-                </div>
+        <div className="w-full h-full flex p-4 bg-green-50">
+            <NavigationPanel showPanel={showNavPanel} />
+            <div className="ml-0 w-full">
+                <div className="text-center py-8">
+                    <div className="flex items-center justify-center gap-4">
+                        <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          repeat: Infinity, // Infinite rotation
+                          duration: 3,      // Time in seconds for one rotation
+                          ease: "linear",   // Smooth continuous motion
+                        }}
+                        >
 
-                <div className={styles.user_main_options}>
-                    <div className={styles.paneloptioncon}>
-                        <GoHome className={styles.panelicon} />
-                        <Link to="/homepage" state={{ user }}>Home</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <CiBookmarkCheck className={styles.panelicon} />
-                        <Link to="/bookingspage" state={{ user }}>Bookings</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <VscTools className={styles.panelicon} />
-                        <a onClick={navResources}>Resources</a>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <FaRegShareSquare className={styles.panelicon} />
-                        <a href="">Blogs</a>
-                    </div>
-                </div>
+                        <GiMaterialsScience className="text-green-600 text-6xl" />
+                        </motion.div>
+                        <h2 className="text-green-800 text-6xl font-bold">
+                            Welcome, {user?.username ?? "User"}
+                        </h2>
+                        <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{
+                          repeat: Infinity, // Infinite rotation
+                          duration: 3,      // Time in seconds for one rotation
+                          ease: "linear",   // Smooth continuous motion
+                        }}>
 
-                <div className={styles.account_options}>
-                    <div className={styles.paneloptioncon}>
-                        <VscAccount className={styles.panelicon} />
-                        <a onClick={navAccount}>Account</a>
+                        <MdOutlineScience className="text-green-600 text-6xl" />
+                        </motion.div>
                     </div>
-                    <a href="/" className={styles.signout}><span>Sign out</span></a>
-                </div>
-            </div>
-
-            <div className={styles.herowidget}>
-                <div className={styles.hero_widget_items}>
-                    <GiMaterialsScience className={styles.react_icon} />
-                </div>
-                <div className={styles.hero_widget_items}>
-                    <h2 className={styles.display_name}>
-                        Welcome, {user?.username ?? "User"}
-                    </h2>
-                    <p>
+                    <p className="text-green-700 mt-4">
                         "Welcome to Appointly – Simplifying your scheduling, empowering your day!"
                     </p>
-                    <button className={styles.explore}>
+                    <button className="mt-6 px-6 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700">
                         Explore more
                     </button>
                 </div>
-                <div className={styles.hero_widget_items}>
-                    <MdOutlineScience className={styles.widgeticon} />
+
+                <div className=" flex justify-center w-full items-center flex-col">
+                    <h3 className="text-green-800 text-2xl font-semibold">Quick Search:</h3>
+                    <Product_search />
                 </div>
-            </div>
 
-            <div className={styles.search_bar}>
-                <h3>Quick Search: </h3><Product_search className={styles.searchbar_comp} />
-            </div>
-
-            <div className={styles.catalogcolumns}>
-                <div className={styles.rows_con}>
-                    <h3>Popular Centers</h3>
-                    <div className={styles.row}>
+                <div className="my-8">
+                    <h3 className="text-green-800 text-2xl font-semibold mb-4">Popular Centers</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {popular.map((item) => (
-                            <div key={item.id} className={styles.item}>
-                                <img src={getImageSrc(item)} alt={item.name} className={styles.item_img} />
-                                <h4>{item.name}</h4>
-                                <div className={styles.tagcon}>
+                            <div
+                                key={item.id}
+                                className="border border-green-300 rounded-lg bg-white shadow-lg p-4 flex flex-col items-center"
+                            >
+                                <img
+                                    src={getImageSrc(item)}
+                                    alt={item.name}
+                                    className="w-24 h-24 object-cover rounded-full mb-4"
+                                />
+                                <h4 className="text-green-700 text-lg font-semibold">{item.name}</h4>
+                                <div className="flex gap-2 mt-2">
                                     {item.tags.map((tag, index) => (
-                                        <span key={index} className={styles.tag}>{tag}</span>
+                                        <span
+                                            key={index}
+                                            className="text-green-600 bg-green-100 px-2 py-1 text-sm rounded"
+                                        >
+                                            {tag}
+                                        </span>
                                     ))}
                                 </div>
-                                <button className={styles.book_button} onClick={() => handleBookNow(item)}>Book Now</button>
+                                <button
+                                    className="mt-4 px-4 py-2 bg-green-600 text-white font-medium rounded hover:bg-green-700"
+                                    onClick={() => handleBookNow(item)}
+                                >
+                                    Book Now
+                                </button>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className={styles.rows_con}>
-                    <h3>Quick Book</h3>
-                    <div className={styles.row}>
+                <div className="my-8">
+                    <h3 className="text-green-800 text-2xl font-semibold mb-4">Quick Book</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {popular.map((item) => (
-                            <div key={item.id} className={styles.item}>
-                                <img src={getImageSrc(item)} alt={item.name} className={styles.item_img} />
-                                <h4>{item.name}</h4>
-                                <div className={styles.tagcon}>
+                            <div
+                                key={item.id}
+                                className="border border-green-300 rounded-lg bg-white shadow-lg p-4 flex flex-col items-center"
+                            >
+                                <img
+                                    src={getImageSrc(item)}
+                                    alt={item.name}
+                                    className="w-24 h-24 object-cover rounded-full mb-4"
+                                />
+                                <h4 className="text-green-700 text-lg font-semibold">{item.name}</h4>
+                                <div className="flex gap-2 mt-2">
                                     {item.tags.map((tag, index) => (
-                                        <span key={index} className={styles.tag}>{tag}</span>
+                                        <span
+                                            key={index}
+                                            className="text-green-600 bg-green-100 px-2 py-1 text-sm rounded"
+                                        >
+                                            {tag}
+                                        </span>
                                     ))}
                                 </div>
-                                <button className={styles.book_button} onClick={() => handleBookNow(item)}>Book Now</button>
+                                <button
+                                    className="mt-4 px-4 py-2 bg-green-600 text-white font-medium rounded hover:bg-green-700"
+                                    onClick={() => handleBookNow(item)}
+                                >
+                                    Book Now
+                                </button>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

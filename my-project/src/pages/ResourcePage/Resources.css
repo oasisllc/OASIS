@@ -2,10 +2,10 @@
 .custom-checkbox {
     appearance: none; /* Removes default browser styles */
     -webkit-appearance: none; /* For WebKit browsers */
-    width: 20px;
-    height: 20px;
-    background-color: #1c1c1a; /* Default background color */
-    border: 2px solid #ffd500;
+    width: 15px;
+    height: 15px;
+    background-color: #ffffff; /* Default background color */
+    border: 2px solid #24c903;
     border-radius: 4px; /* Optional: for rounded corners */
     cursor: pointer;
     display: inline-block; /* Ensures it behaves like a checkbox */
@@ -20,7 +20,7 @@
   /* Optional: Add a checkmark for the checked state */
   .custom-checkbox:checked::after {
     content: '✔'; /* Unicode for checkmark */
-    color: #ffd500;
+    color: #24c903;
     font-size: 16px;
     display: block;
     text-align: center;

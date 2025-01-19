@@ -1,141 +1,96 @@
-
-:root{
-    --charcoal: #333333;
-    --navy: #001f3f;
-    --yellow: #ebd43e;
-}
-
-body{
-    padding: 0;
+:root {
+    --green: #28a745;
+    --white: #ffffff;
+    --light-green: #d4edda;
+    --dark-green: #006e1a;
+    color: #28a745;
+  }
+  
+  body {
     margin: 0;
-    background-color: var(--charcoal);
-    font-family: var(--font);
-    color: var(--yellow);
-}
-
-h1{
-    color: var(--yellow);
-    font-family: var(--font);
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    margin-top: 3vh;
-}
-
-
-
-.login_con{
+    padding: 0;
+    background-color: var(--light-green);
+    font-family: Arial, sans-serif;
+  }
+  
+  .login_con {
     width: 70vw;
     height: 80vh;
-    border:  1px solid var(--yellow);
-    transform: translateX(15vw)translateY(10vh);
+    border: 1px solid var(--green);
+    transform: translateX(15vw) translateY(10vh);
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     overflow: hidden;
-}
-
-
-
-.panels{
+    background-color: var(--white);
+  }
+  
+  .panels {
     width: 50%;
     height: 100%;
-    border: 0px solid var(--yellow);
-}
-
-.input_group{
-    border: 0px solid;
+    border: 0px solid var(--green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .input_group {
     margin: 25px auto 0 auto; /* Center horizontally and keep top margin */
     display: flex;
-    flex-direction: column; 
-    padding: 10px;
-    gap: 15px;
+    flex-direction: column;
     width: 100%;
-}
-.input_group input{
-    width: 10vw;
-}
-
-.input_group:nth-child(2){
-    transform: translateY(-3vh);
-}
-
-.panels:nth-child(1){
-    display: flex;
-    flex-direction: column;
-
-}
-
-.panels:nth-child(2){
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--yellow);
-    justify-content: start;
-}
-
-input{
-    padding: 8px;
+  }
+  
+  .input_group label {
+    margin-bottom: 5px;
+    color: var(--dark-green);
+  }
+  
+  .input_group input {
+    padding: 10px;
+    border: 1px solid var(--green);
     border-radius: 5px;
-    border: .5px solid var(--yellow);
-    background-color: var(--charcoal);
-    color: var(--yellow);
-    
-}
-
-input:focus{
-    outline: none;
-}
-
-.signup_opt{
-    border: 0px solid;
-    width: 70%;
-    transform: translateX(25%);
-    margin-top: 7px;
-}
-
-p{
-    color: rgb(147, 146, 146);
-    font-size: 12px;
-}
-
-a{
-    color: var(--yellow);
-    text-decoration: none;
-}
-
-button{
-    border-width: .5px;
-    border: 1px solid var(--yellow);
-    background-color: var(--charcoal);
-    width: 100%;
-    border-radius: 25px;
+    background-color: var(--light-green);
+    color: var(--dark-green);
+  }
+  
+  .input_group input::placeholder {
+    color: var(--dark-green);
+  }
+  
+  .button {
     padding: 10px;
-    color: var(--yellow);
-    transition: .2s;
-}
-
-button:hover{
-    background-color: var(--yellow);
-    color: var(--charcoal);
-}
-
-.welcome{
-    font-size: 70px;
-    color: var(--charcoal);
-    text-align: left;
-}
-
-.panels:nth-child(2) p{
-    font-size: 25px;
-    width: 70%;
-    text-align: left;
-    line-height: 170%;
-    transform: translateY(6vh);
-}
-
-.login_form{
-    transform: translateY(-3vh);
-    border: 0px solid var(--yellow);
-}
-
+    border: none;
+    border-radius: 5px;
+    background-color: var(--green);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: var(--dark-green);
+  }
+  
+  .text-center {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .text-center a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  
+  .text-center a:hover {
+    text-decoration: underline;
+  }
+  
+  .welcome {
+    font-size: 24px;
+    text-align: center;
+    color: var(--green);
+    margin-bottom: 20px;
+  }

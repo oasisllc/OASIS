@@ -53,8 +53,8 @@ export function Product_search() {
     };
 
     return (
-        <div className={styles.search_container}>
-            <input onFocus={handleFocus} onChange={handlechange} className={styles.searchbar} type="text" placeholder="Search for resources" />
+        <div className='w-96 p-3' >
+            <input className=' border  text-green-500 w-full p-4 rounded-lg text-sm bg-white border-green-500' onFocus={handleFocus} onChange={handlechange} type="text" placeholder="Search for resources" />
             <div className={styles.result_box}>
                 {filteredResults.map((res) => (
                     <div key={res.id} className={styles.result}>

@@ -1,16 +1,14 @@
-import styles from './bookings.module.css';
 import { useState, useEffect } from 'react';
 import { SlCalender } from "react-icons/sl";
 import { GoHome } from "react-icons/go";
 import { CiBookmarkCheck } from "react-icons/ci";
-import { VscTools } from "react-icons/vsc";
+import { VscTools, VscAccount } from "react-icons/vsc";
 import { FaRegShareSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { db } from '../../firebase';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { MdOutlineDeleteOutline } from "react-icons/md";
-
+import NavigationPanel from '../homepage/NavigationPanel';
 export function Bookings() {
     const location = useLocation();
     const user = location.state?.user;
@@ -31,27 +29,24 @@ export function Bookings() {
                 return;
             }
 
-            console.log('Fetching bookings...');
             const q = query(collection(db, 'users'), where('username', '==', user.username), where('password', '==', user.password));
             const querySnapshot = await getDocs(q);
             let bookedData = [];
 
             querySnapshot.forEach((doc) => {
                 const userData = doc.data();
-                console.log('User data:', userData);
                 if (userData.booked && Array.isArray(userData.booked)) {
                     bookedData = userData.booked;
                 }
             });
 
             if (bookedData.length === 0) {
-                setBookings([{ id: 'no-booking', resource_name: 'no booking yet' }]);
-                setFilteredBookings([{ id: 'no-booking', resource_name: 'no booking yet' }]);
+                setBookings([{ id: 'no-booking', resource_name: 'No bookings yet' }]);
+                setFilteredBookings([{ id: 'no-booking', resource_name: 'No bookings yet' }]);
             } else {
                 setBookings(bookedData);
                 setFilteredBookings(bookedData);
             }
-            console.log('Bookings:', bookedData);
         };
 
         fetchBookings();
@@ -62,10 +57,7 @@ export function Bookings() {
     }, [filters, bookings]);
 
     const handleDelete = async (id) => {
-        if (!user) {
-            console.error('User is undefined');
-            return;
-        }
+        if (!user) return;
 
         const q = query(collection(db, 'users'), where('username', '==', user.username), where('password', '==', user.password));
         const querySnapshot = await getDocs(q);
@@ -102,127 +94,58 @@ export function Bookings() {
                 if (filters.researchCenters && booking.resource_type === 'researchCenter') return true;
                 return false;
             });
-            if (filtered.length === 0) {
-                setFilteredBookings([{ id: 'no-booking', resource_name: 'no bookings' }]);
-            } else {
-                setFilteredBookings(filtered);
-            }
+            setFilteredBookings(filtered.length ? filtered : [{ id: 'no-booking', resource_name: 'No bookings' }]);
         }
     };
 
     const navigate = useNavigate();
-
-    const navAccount = () => {
-        navigate('/profilepage', { state: { user: user } });
-    };
+    const navAccount = () => navigate('/profilepage', { state: { user } });
 
     return (
-        <>
-            <div className={styles.sidepanel}>
-                <div className={styles.logo_con}>
-                    <SlCalender className={styles.logoicon} />
-                    <h1>Appointly</h1>
-                </div>
-
-                <div className={styles.user_main_options}>
-                    <div className={styles.paneloptioncon}>
-                        <GoHome className={styles.panelicon} />
-                        <Link to="/homepage" state={{ user }}>Home</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <CiBookmarkCheck className={styles.panelicon} />
-                        <Link to="/bookingspage" state={{ user }}>Bookings</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <VscTools className={styles.panelicon} />
-                        <Link to="/resourcespage" state={{ user }}>Resources</Link>
-                    </div>
-                    <div className={styles.paneloptioncon}>
-                        <FaRegShareSquare className={styles.panelicon} />
-                        <a href="">Blogs</a>
-                    </div>
-                </div>
-
-                <div className={styles.account_options}>
-                    <div className={styles.paneloptioncon}>
-                        <VscAccount className={styles.panelicon} />
-                        <a onClick={navAccount}>Account</a>
-                    </div>
-                    <a href="/" className={styles.signout}><span>Sign out</span></a>
-                </div>
-            </div>
-
-            <div className={styles.data_points}>
-                <h2>Bookings</h2>
-            </div>
-
-            <div className={styles.bookings_holder}>
-                <div className={styles.opt_bar}>
-                    <div className={styles.opt_bar_items}>
-                        <h3>Filter by:</h3>
-                        <div className={styles.filter_box}>
-                            <label>
+        <div className="flex text-green-500">
+            <NavigationPanel showPanel={true}/>
+            
+            <main className="flex-1 bg-gray-100 p-6">
+                <header>
+                    <h2 className="text-2xl font-bold text-green-700">Bookings</h2>
+                </header>
+                <section className="mt-4 bg-white shadow p-4 rounded-lg">
+                    <h3 className="text-lg font-bold">Filter by:</h3>
+                    <div className="flex items-center space-x-4 mt-2">
+                        {['all', 'labEquipment', 'meetingRooms', 'researchCenters'].map((filter) => (
+                            <label key={filter} className="flex items-center space-x-2">
                                 <input
                                     type="checkbox"
-                                    name="all"
-                                    checked={filters.all}
+                                    name={filter}
+                                    checked={filters[filter]}
                                     onChange={handleFilterChange}
+                                    className="form-checkbox text-green-700"
                                 />
-                                All
+                                <span>{filter}</span>
                             </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="labEquipment"
-                                    checked={filters.labEquipment}
-                                    onChange={handleFilterChange}
-                                />
-                                Lab Equipment
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="meetingRooms"
-                                    checked={filters.meetingRooms}
-                                    onChange={handleFilterChange}
-                                />
-                                Meeting Rooms
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="researchCenters"
-                                    checked={filters.researchCenters}
-                                    onChange={handleFilterChange}
-                                />
-                                Research Centers
-                            </label>
-                        </div>
+                        ))}
                     </div>
-                </div>
-
-                <div className={styles.booked_items}>
-                    {filteredBookings.map((booking) => (
-                        <div key={booking.id} className={styles.item}>
-                            <h4 className={styles.resource_name}>{booking.resource_name}</h4>
-                            <div className={styles.item_desc}>
-                                <p>{booking.description ?? "No description"}</p>
+                </section>
+                <section className="mt-6">
+                    <div className="grid grid-cols-1 gap-4">
+                        {filteredBookings.map((booking) => (
+                            <div key={booking.id} className="p-4 bg-white shadow rounded-lg flex justify-between items-center">
+                                <div className='p-4 items-center'>
+                                    <h4 className="font-bold text-base">{booking.resource_name}</h4>
+                                    <p className="text-sm text-gray-600">{booking.description ?? "No description"}</p>
+                                    <p className="text-sm text-gray-500">{booking.time_booked ?? "No time"} | {booking.date ?? "No date"}</p>
+                                </div>
+                                <button
+                                    onClick={() => handleDelete(booking.id)}
+                                    className="text-red-600 hover:text-red-800"
+                                >
+                                    <MdOutlineDeleteOutline className="text-2xl" />
+                                </button>
                             </div>
-                            <div className={styles.item_date}>
-                                <p>{booking.time_booked ?? "No date"} </p>
-                            </div>
-
-                            <div className={styles.item_date}>
-                                <p>{booking.date}</p>
-                            </div>
-
-                            <button className={styles.delete_button} onClick={() => handleDelete(booking.id)}>
-                                <MdOutlineDeleteOutline className={styles.delete_icon} />
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </>
+                        ))}
+                    </div>
+                </section>
+            </main>
+        </div>
     );
 }

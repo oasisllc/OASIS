@@ -7,7 +7,7 @@ import { Profile } from "./pages/ProfilePage/Profile.jsx";
 import Resources from "./pages/ResourcePage/Resources.jsx"; 
 import { Homepage } from "./pages/homepage/homepage.jsx";
 import { Bookings } from './pages/bookingspage/bookings.jsx'
-
+import { Blogs } from "./pages/blogpage/blogpage.jsx";
 export default function App() {
   return (
     <BrowserRouter>
@@ -19,6 +19,7 @@ export default function App() {
         <Route path= '/profilepage' element={<Profile />} />
         <Route path = '/bookingspage' element = {<Bookings />} />
         <Route path = '/resourcespage' element = {<Resources />} />
+        <Route path = '/blogpage' element = {<Blogs />} />
       </Routes>
     </BrowserRouter>
   );

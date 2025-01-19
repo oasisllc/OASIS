@@ -5,28 +5,44 @@ import defaultImg from "/src/assets/default profile image.png";
 import UploadPicture from "./UploadPicture";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { use } from "react";
-
+import NavigationPanel from "../homepage/NavigationPanel";
+import { useEffect } from "react";
 export const Profile = (props) => {
+  const location = useLocation();
+  const user = location.state?.user;
+
   const stats = { Bookings: 0, Completed: 9, Pending: 28, Cancelled: 19 };
   const [uploadOpen, setUploadOpen] = useState(false); // Controls the upload modal visibility
   const [profileImg, setProfileImg] = useState(props.profileImg || defaultImg); // State for profile image
   const [firstName, setFirstName] = useState(props.firstName || "John");
   const [lastName, setLastName] = useState(props.lastName || "Doe");
   const [username, setUsername] = useState(props.username || "johndoe");
-
-  const location = useLocation();
-  const user = location.state?.user;
-  console.log(user)
-
+  const [showNavPanel, setShowNavPanel] = useState(false);
+  
   // Function to handle the profile picture update
   const handleProfilePictureUpdate = (newImage) => {
     setProfileImg(newImage); // Update the profile picture
     setUploadOpen(false); // Close the modal
   };
 
+  useEffect(() => {
+      const handleMouseMove = (e) => {
+        if (e.clientX < 150) {
+          setShowNavPanel(true);
+        } else {
+          setShowNavPanel(false);
+        }
+      };
+  
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, []);
+
   return (
     <>
+      <NavigationPanel showPanel={showNavPanel}/>
+
+
       {uploadOpen && (
         <UploadPicture
           onClose={() => setUploadOpen(false)}
@@ -34,106 +50,93 @@ export const Profile = (props) => {
         />
       )}
 
-      <div id="profile" className="w-screen h-screen bg-neutral-900 flex flex-row overflow-hidden">
-        <div className="w-full fixed h-14 px-8 bg-neutral-950 flex justify-between items-center">
-          <div className="flex items-center text-lg gap-x-2 text-yellow-200">
-            <h1 className="font-semibold text-lg">Profile</h1>
-          </div>
+      <div id="profile" className="w-screen h-screen bg-gray-100 flex flex-row overflow-hidden">
+        {/* Top Bar */}
+        <div className="w-full fixed h-14 px-8 bg-green-500 flex justify-between items-center shadow-md">
+          <h1 className="text-lg text-white font-semibold">Profile</h1>
         </div>
 
-        <div className="w-full h-full flex items-center justify-center p-16 gap-8">
-          {/* Profile Card */}
+        {/* Content Section */}
+        <div className="w-full h-full flex items-center justify-center p-16 gap-8 pt-20">
+          {/* Left: Profile Card */}
           <div
-            style={{
-              boxShadow: "0px 0px 10px rgba(255, 233, 0, 1)",
-              borderRadius: "24px",
-            }}
-            className="w-1/4 border min-w-44 border-yellow-200 h-96 rounded items-center block p-2"
+            className="w-1/4 shadow-2xl bg-white border min-w-44 border-green-200 h-96 rounded-xl flex flex-col items-center p-4"
           >
-            <div className="w-full h-36 items-center justify-center flex border-b border-neutral-800 flex-col gap-y-2 relative">
+            <div className="w-full h-36 flex flex-col items-center justify-center gap-y-2 relative border-b border-gray-200 pb-4">
               <div
-                style={{
-                  width: "90px",
-                  height: "90px",
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                }}
-                className="bg-yellow-50 relative"
+                style={{ width: "90px", height: "90px", borderRadius: "50%", overflow: "hidden" }}
+                className="bg-gray-100 relative"
               >
                 <img
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                   src={profileImg}
                   alt="Profile"
                 />
                 <button
                   onClick={() => setUploadOpen(true)}
-                  className="fixed w-auto text-yellow-300 bg-neutral-900 rounded-full"
+                  className="fixed -translate-y-6 z-20  bg-green-500 text-white p-2 rounded-full shadow-md hover:bg-green-600 transition"
                 >
                   <CiCamera />
                 </button>
               </div>
-              <h1 className="text-xs font-light">{props.name || "John Doe"}</h1>
+              <h1 className="text-sm text-green-600 font-medium">{props.name || "John Doe"}</h1>
             </div>
 
-            <div className="w-full h-60  justify-center px-4">
+            <div className="w-full h-60 flex flex-col gap-4 px-4 pt-4">
               {Object.entries(stats).map(([stat, count], index) => (
                 <div
                   key={index}
-                  className="w-full justify-between pb-2 border-yellow-300 border-opacity-25 border-b items-center flex"
+                  className="w-full flex justify-between text-gray-700 border-b border-gray-200 pb-2"
                 >
                   <h1 className="font-light text-sm">{stat}</h1>
-                  <h1 className="text-sm">{count}</h1>
+                  <h1 className="font-medium text-sm">{count}</h1>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Editable Form */}
+          {/* Right: Editable Profile Section */}
           <div
-            style={{
-              boxShadow: "0px 0px 10px rgba(255, 233, 0, 1)",
-              borderRadius: "24px",
-            }}
-            className="border border-yellow-200 w-3/4 h-96 flex flex-col text-white rounded shadow-lg"
+            className="border border-green-200 w-3/4 h-96 bg-white rounded-xl shadow-lg flex flex-col"
           >
-            <div className="w-full h-14 rounded-3xl justify-center flex">
-              <h1 className="text-2xl">
-                Hi {user.username ?? "John"}
+            <div className="w-full h-14 flex items-center justify-center border-b border-gray-200">
+              <h1 className="text-2xl font-semibold text-green-600">
+                Hi {user?.username || "John"}
               </h1>
             </div>
 
-            <div className="p-4 w-full h-3/4 justify-center flex flex-col items-center">
-              <form className="justify-center text-neutral-400 translate-y-14 transform w-3/4 h-full flex flex-col gap-y-4 md:flex-wrap md:w-full items-center ">
-                <div className="flex flex-col gap-y-1">
-                  <label htmlFor="fname" className="text-sm font-light">
+            <div className="p-6 flex flex-col items-center gap-6">
+              <form className="w-full text-green-500 max-w-lg flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="fname" className="text-sm font-medium text-gray-600">
                     First Name:
                   </label>
                   <input
                     id="fname"
                     type="text"
-                    value={user.username || "John"}
+                    value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Enter your first name"
-                    className="p-2 rounded bg-neutral-950 text-sm h-6"
+                    className="p-2 w-48 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-green-200"
                   />
                 </div>
 
-                <div className="flex flex-col gap-y-1">
-                  <label htmlFor="lname" className="text-sm font-light">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="lname" className="text-sm font-medium text-gray-600">
                     Last Name:
                   </label>
                   <input
                     id="lname"
                     type="text"
-                    value={user.email || ""}  
+                    value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Enter your last name"
-                    className="p-2 rounded bg-neutral-950 text-sm h-6"
+                    className="  p-2 w-48 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-green-200"
                   />
                 </div>
 
-                <div className="flex flex-col gap-y-1">
-                  <label htmlFor="email" className="text-sm font-light">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="email" className="text-sm font-medium text-gray-600">
                     Email:
                   </label>
                   <input
@@ -141,31 +144,31 @@ export const Profile = (props) => {
                     type="email"
                     value={props.email || "example@example.com"}
                     readOnly
-                    className="p-2 rounded bg-neutral-950 text-sm h-6"
+                    className="p-2 w-48 rounded border border-gray-300 bg-gray-100 cursor-not-allowed"
                   />
                 </div>
 
-                <div className="flex flex-col gap-y-1">
-                  <label htmlFor="username" className="text-sm font-light">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="username" className="text-sm font-medium text-gray-600">
                     Username:
                   </label>
                   <input
                     id="username"
                     type="text"
-                    value={user.username}
+                    value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter your username"
-                    className="p-2 rounded bg-neutral-950 text-sm h-6"
+                    className="p-2 w-48 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-green-200"
                   />
                 </div>
-              </form>
 
-              <button
-                type="submit"
-                className="translate-y-4  md:translate-y-0 max-w-48 rounded-2xl active:scale-90 bg-neutral-900 hover:text-yellow-100 text-yellow-300 font-semibold hover:scale-110  hover:bg-neutral-900"
-              >
-                Save Changes
-              </button>
+                <button
+                  type="submit"
+                  className="w-full py-2 mt-4 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition"
+                >
+                  Save Changes
+                </button>
+              </form>
             </div>
           </div>
         </div>
