@@ -102,10 +102,10 @@ export function Bookings() {
     const navAccount = () => navigate('/profilepage', { state: { user } });
 
     return (
-        <div className="flex text-green-500">
+        <div className=" bg-white flex text-green-500">
             <NavigationPanel showPanel={true}/>
             
-            <main className="flex-1 bg-gray-100 p-6">
+            <main className=" ml-48 flex-1 bg-gray-100 p-6">
                 <header>
                     <h2 className="text-2xl font-bold text-green-700">Bookings</h2>
                 </header>
