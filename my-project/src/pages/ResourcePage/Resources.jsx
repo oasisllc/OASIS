@@ -6,8 +6,12 @@ import { motion } from "framer-motion";
 import Booking from "./Booking";
 import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { useLocation } from "react-router-dom";
+const Resources = () => {
 
-const Resources = ({ user }) => {
+  const location = useLocation()
+  const user = location.state?.user;
+  
   const categories = {
     "Lab Equipment": "equipment",
     "Meeting Rooms": "meeting room",
@@ -19,12 +23,13 @@ const Resources = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const [bookingOpen, setBookingOpen] = useState(false);
   const [viewedResource, setViewedResource] = useState(null);
-  const [resources, setResources] = useState([]); // State to store fetched resources
+  const [resources, setResources] = useState([]); 
 
   useEffect(() => {
     const fetchData = async () => {
       const collections = ['labEquipment', 'meetingRooms', 'researchCenters'];
       let allResources = [];
+      console.log(user)
 
       for (const coll of collections) {
         const querySnapshot = await getDocs(collection(db, coll));
@@ -33,11 +38,14 @@ const Resources = ({ user }) => {
       }
 
       setResources(allResources);
-      console.log(allResources)
     };
 
     fetchData();
   }, []);
+
+
+  
+
 
   const handleBookingOpen = (resource) => {
     setViewedResource(resource);

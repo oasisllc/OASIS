@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export function Homepage() {
-    const location = useLocation();
-    const user = location.state?.user;
+    const location = useLocation()
+      const user = location.state?.user;
 
     const [popular, setPopular] = useState([]);
     const [resource_to_book, setResourceToBook] = useState(null);
@@ -42,7 +42,14 @@ export function Homepage() {
     const navigate = useNavigate();
 
     const navAccount = () => {
+        console.log(user)
         navigate('/profilepage', { state: { user: user } });
+    }
+
+    const navResources = () =>{
+        console.log(user)
+        navigate('/resourcespage', { state: { user: user } });
+
     }
 
     const handleBookNow = (item) => {
@@ -81,7 +88,7 @@ export function Homepage() {
                     </div>
                     <div className={styles.paneloptioncon}>
                         <VscTools className={styles.panelicon} />
-                        <a href="">Resources</a>
+                        <a onClick={navResources}>Resources</a>
                     </div>
                     <div className={styles.paneloptioncon}>
                         <FaRegShareSquare className={styles.panelicon} />

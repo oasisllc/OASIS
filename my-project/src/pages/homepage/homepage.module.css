@@ -6,13 +6,13 @@
     --grey:rgb(212, 211, 211);
 }
 
-body{
+/* body{
     padding: 0;
     margin: 0;
     background-color: var(--charcoal);
     font-family: var(--font);
     color: var(--yellow);
-}
+} */
 
 
 .sidepanel{

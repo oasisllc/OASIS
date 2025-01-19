@@ -1,156 +1,119 @@
-
-:root{
+:root {
+    --yellow: #FFD700;
     --charcoal: #333333;
-    --navy: #001f3f;
-    --yellow: #ebd43e;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+    --dark-gray: #555555;
 }
 
-body{
-    padding: 0;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--charcoal);
+    color: var(--white);
     margin: 0;
-    background-color: var(--charcoal);
-    font-family: var(--font);
-    color: var(--yellow);
+    padding: 0;
 }
 
-h1{
-    color: var(--yellow);
-    font-family: var(--font);
-    text-align: center;
-}
-
-.signup_con{
-    width: 70vw;
-    height: 80vh;
-    border:  1px solid var(--yellow);
-    transform: translateX(15vw)translateY(10vh);
-    border-radius: 10px;
+.signup_con {
     display: flex;
-    justify-content: space-evenly;
-    overflow: hidden;
-}
-
-
-
-.panels{
-    width: 50%;
-    height: 100%;
-    border: 0px solid var(--yellow);
-    
-}
-
-.input_group{
-    border: 0px solid;
-    margin: 25px auto 0 auto; /* Center horizontally and keep top margin */
-    display: flex;
-    flex-direction: column; 
-    padding: 10px;
-    gap: 10px;
-    width: 70%;
-}
-
-.input_group:nth-child(1){
-    transform: translateY(3vh);
-}
-
-.panels:nth-child(1){
-    display: flex;
-    flex-direction: column;
-    
-
-}
-
-.panels:nth-child(2){
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background-color: var(--yellow);
-    justify-content: start;
-}
-
-input{
-    padding: 8px;
-    border-radius: 5px;
-    border: .5px solid var(--yellow);
+    height: 100vh;
     background-color: var(--charcoal);
+}
+
+.panels {
+    background-color: var(--dark-gray);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    margin: 20px;
+}
+
+h1 {
     color: var(--yellow);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-input:focus{
-    outline: none;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
 }
 
-.login_opt{
-    border: 0px solid;
-    width: 70%;
-    transform: translateX(21%);
+.input_group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-p{
-    color: rgb(147, 146, 146);
-    font-size: 12px;
-    margin-left: 1vw;
-    transform: translateY(-2vh);
+.input_group label {
+    font-size: 14px;
+    color: var(--light-gray);
 }
 
-a{
-    color: var(--yellow);
-    text-decoration: none;
-    
-}
-
-button{
-    border-width: .5px;
+.input_group input,
+.input_group select {
+    padding: 10px;
+    border-radius: 5px;
     border: 1px solid var(--yellow);
     background-color: var(--charcoal);
-    width: 100%;
-    border-radius: 25px;
-    padding: 10px;
     color: var(--yellow);
-    transition: .2s;
-    transform: translateY(-4vh);
+    font-size: 14px;
 }
 
-button:hover{
+.input_group input::placeholder,
+.input_group select::placeholder {
+    color: var(--light-gray);
+}
+
+.input_group input:focus,
+.input_group select:focus {
+    outline: none;
+    border-color: var(--white);
+}
+
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
     background-color: var(--yellow);
     color: var(--charcoal);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.welcome{
-    font-size: 70px;
+button:hover {
+    background-color: var(--white);
     color: var(--charcoal);
+}
+
+.login_opt,
+.signup_opt {
     text-align: center;
+    margin-top: 10px;
 }
 
-.panels:nth-child(2) p{
-    font-size: 25px;
-    width: 70%;
-    text-align: left;
-    line-height: 150%;
-}
-
-select{
-    padding: 8px;
-    border-radius: 5px;
-    border: .5px solid var(--yellow);
-    background-color: var(--charcoal);
+.login_opt a,
+.signup_opt a {
     color: var(--yellow);
+    text-decoration: none;
+    font-weight: bold;
 }
-option{
-    padding: 8px;
-    border-radius: 5px;
-    border: .5px solid var(--yellow);
-    background-color: var(--charcoal);
+
+.login_opt a:hover,
+.signup_opt a:hover {
+    text-decoration: underline;
+}
+
+.welcome {
+    font-size: 24px;
+    text-align: center;
     color: var(--yellow);
-}
-
-form{
-    transform: translateY(-10vh);
-    border: 0px solid;
-    padding-bottom: 100px;
-    width: 100%;
-}
-
-.input_group:nth-child(3){
-    transform: translateY(-3vh);
+    margin-bottom: 20px;
 }

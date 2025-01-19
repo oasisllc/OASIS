@@ -135,7 +135,7 @@ export function Bookings() {
                     </div>
                     <div className={styles.paneloptioncon}>
                         <VscTools className={styles.panelicon} />
-                        <a href="resourcespage">Resources</a>
+                        <Link to="/resourcespage" state={{ user }}>Resources</Link>
                     </div>
                     <div className={styles.paneloptioncon}>
                         <FaRegShareSquare className={styles.panelicon} />
