@@ -18,6 +18,7 @@ export default function App() {
         <Route path= '/homepage' element={<Homepage />} />
         <Route path= '/profilepage' element={<Profile />} />
         <Route path = '/bookingspage' element = {<Bookings />} />
+        <Route path = '/resourcespage' element = {<Resources />} />
       </Routes>
     </BrowserRouter>
   );

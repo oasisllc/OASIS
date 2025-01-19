@@ -135,7 +135,7 @@ export function Bookings() {
                     </div>
                     <div className={styles.paneloptioncon}>
                         <VscTools className={styles.panelicon} />
-                        <a href="">Resources</a>
+                        <a href="resourcespage">Resources</a>
                     </div>
                     <div className={styles.paneloptioncon}>
                         <FaRegShareSquare className={styles.panelicon} />
